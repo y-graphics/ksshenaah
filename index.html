@@ -754,6 +754,18 @@
             adminNumber: '+966593791001'               
         };
 
+        // --- مصفوفة المنتجات الافتراضية لمنع اختفاء الأقسام ---
+        const DEFAULT_PRODUCTS = [
+            { id: "def-1", name: "صندوق الخضار التوفيري", desc: "تشكيلة متكاملة من الخضار اليومية الأساسية الطازجة والمغسولة بعناية.", price: 49, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=500&auto=format&fit=crop", catId: "grid-saver-boxes" },
+            { id: "def-2", name: "صندوق الفواكه المشكل", desc: "صندوق يحتوي على فواكه موسمية طازجة جاهزة ومثالية للعائلة.", price: 55, img: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?q=80&w=500&auto=format&fit=crop", catId: "grid-saver-boxes" },
+            { id: "def-3", name: "بصل أحمر مفروم جاهز", desc: "بصل طازج مفروم ومجهز للطبخ مباشرة، معبأ بإحكام للحفاظ على نكهته.", price: 10, img: "https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=500&auto=format&fit=crop", catId: "grid-vegetables" },
+            { id: "def-4", name: "مكعبات بطاطس جاهزة", desc: "بطاطس مقطعة مكعبات متساوية ومغسولة، ممتازة للوجبات والإيدامات.", price: 12, img: "https://images.unsplash.com/photo-1518977676601-b53f02bc6d5d?q=80&w=500&auto=format&fit=crop", catId: "grid-vegetables" },
+            { id: "def-5", name: "شرائح أناناس مجهزة", desc: "أناناس طازج حلو المذاق ومقطع على شكل شرائح دائرية جاهزة للتناول.", price: 18, img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=500&auto=format&fit=crop", catId: "grid-fruits" },
+            { id: "def-6", name: "سلطة فواكه مشكلة", desc: "علبة مجهزة من قطع الفواكه المشكلة الطازجة الغنية بالفيتامينات.", price: 15, img: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=500&auto=format&fit=crop", catId: "grid-fruits" },
+            { id: "def-7", name: "ملفوف ورقي طازج", desc: "أوراق ملفوف خضراء منقاة ومغسولة بعناية، مثالية للسلطات والمحاشي.", price: 8, img: "https://images.unsplash.com/photo-1582515073490-39981397c445?q=80&w=500&auto=format&fit=crop", catId: "grid-greens" },
+            { id: "def-8", name: "حزمة جرجير نظيف", desc: "جرجير بلدي طازج ومغسول ومعقم وجاهز للتقديم مباشرة على مائدتك.", price: 5, img: "https://images.unsplash.com/photo-1629115915538-46603a113d07?q=80&w=500&auto=format&fit=crop", catId: "grid-greens" }
+        ];
+
         function sendTelegramNotification(message) {
             if (!TELEGRAM_CONFIG.botToken || TELEGRAM_CONFIG.botToken.startsWith('YOUR_')) {
                 console.log("لم يتم إعداد توكن Telegram بشكل صحيح.\n", message);
@@ -957,7 +969,14 @@
             const grids = ['grid-saver-boxes', 'grid-vegetables', 'grid-fruits', 'grid-greens'];
             grids.forEach(g => { document.getElementById(g).innerHTML = ''; });
 
-            let customProducts = JSON.parse(localStorage.getItem('kashnah_products')) || [];
+            // جلب المنتجات المخصصة من الذاكرة المحلية، وإذا كانت فارغة نقوم بتهيئة الذاكرة بالمنتجات الافتراضية
+            let customProducts = localStorage.getItem('kashnah_products');
+            if (!customProducts) {
+                localStorage.setItem('kashnah_products', JSON.stringify(DEFAULT_PRODUCTS));
+                customProducts = DEFAULT_PRODUCTS;
+            } else {
+                customProducts = JSON.parse(customProducts);
+            }
             
             customProducts.forEach(prod => {
                 const grid = document.getElementById(prod.catId);
@@ -1117,7 +1136,7 @@
                 btn.innerText = "جاري جلب الموقع...";
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
-                        mapLink = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                        mapLink = `http://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
                         btn.innerHTML = "✅ <b>تم حفظ الموقع الجغرافي بنجاح</b>";
                         btn.style.backgroundColor = "rgba(39, 174, 96, 0.1)";
                     },
