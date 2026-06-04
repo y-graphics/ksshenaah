@@ -29,7 +29,7 @@
 
         /* --- إعدادات الطباعة الدقيقة ومجربة لمنع الفراغات والصفحات الزائدة --- */
         @media print {
-            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay, .mobile-nav-bar, .floating-cart-btn { 
+            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay, .mobile-nav-bar, .floating-cart-btn, #category-page { 
                 display: none !important; 
             }
             body, html { 
@@ -93,10 +93,10 @@
         .logo-icon { color: var(--basil); font-size: 24px; }
         
         .header-nav { display: flex; gap: 25px; align-items: center; justify-content: center; flex: 1; }
-        .header-nav a { text-decoration: none; color: var(--charcoal); font-weight: 700; font-size: 16px; position: relative; padding-bottom: 5px; transition: 0.3s; white-space: nowrap; }
-        .header-nav a::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0%; height: 3px; background-color: var(--basil); border-radius: 2px; transition: 0.3s ease-in-out; }
-        .header-nav a:hover { color: var(--basil); }
-        .header-nav a:hover::after { width: 100%; }
+        .header-nav .nav-link-btn { background: none; border: none; color: var(--charcoal); font-weight: 700; font-size: 16px; position: relative; padding-bottom: 5px; transition: 0.3s; white-space: nowrap; cursor: pointer; }
+        .header-nav .nav-link-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0%; height: 3px; background-color: var(--basil); border-radius: 2px; transition: 0.3s ease-in-out; }
+        .header-nav .nav-link-btn:hover { color: var(--basil); }
+        .header-nav .nav-link-btn:hover::after { width: 100%; }
 
         .header-ctas { display: flex; gap: 15px; align-items: center; z-index: 2; }
         .cart-icon-btn { position: relative; font-size: 24px; color: var(--charcoal); cursor: pointer; background: none; border: none; transition: 0.2s; padding: 5px; }
@@ -143,7 +143,7 @@
         .section-title { font-size: 34px; color: var(--charcoal); font-weight: 800; text-align: center; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; width: 100%; }
-        @media (min-width: 1200px) { .products-grid { grid-template-columns: repeat(5, 1fr); } }
+        @media (min-width: 1200px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
 
         .product-card { 
             width: 100%; background: white; border-radius: 16px; padding: 15px; text-align: center; 
@@ -162,6 +162,8 @@
         .product-card h3 { font-size: 17px; color: var(--charcoal); margin-bottom: 8px; font-weight: 700; }
         .product-card p { color: #666; font-size: 13px; margin-bottom: 15px; line-height: 1.5; min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .product-card .price { font-size: 20px; font-weight: 800; color: var(--basil); margin-bottom: 15px; }
+
+        .view-more-container { text-align: center; margin-top: 35px; width: 100%; display: flex; justify-content: center; }
 
         .empty-section-msg { text-align: center; width: 100%; grid-column: 1 / -1; padding: 30px; color: #888; font-size: 18px; background: #f9f9f9; border-radius: 12px; border: 1px dashed #ddd; }
 
@@ -228,8 +230,8 @@
         .footer-col h3::after { content: ''; position: absolute; bottom: -8px; right: 0; width: 40px; height: 3px; background: var(--basil); border-radius: 2px; }
         .footer-about p { color: #bbb; line-height: 1.9; font-size: 15px; }
         .footer-links-list { display: flex; flex-direction: column; gap: 12px; }
-        .footer-links-list a { color: #bbb; text-decoration: none; transition: 0.3s; font-weight: 500; }
-        .footer-links-list a:hover { color: var(--basil); padding-right: 5px; }
+        .footer-links-list .footer-link-btn { background: none; border: none; text-align: right; color: #bbb; text-decoration: none; transition: 0.3s; font-weight: 500; cursor: pointer; font-size: 15px; }
+        .footer-links-list .footer-link-btn:hover { color: var(--basil); padding-right: 5px; }
         .footer-contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .footer-icon-box { width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 20px; color: var(--terracotta); transition: 0.3s; flex-shrink: 0; }
         .footer-contact-item:hover .footer-icon-box { background: var(--terracotta); color: white; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(211, 84, 0, 0.2); }
@@ -261,13 +263,13 @@
                 z-index: 1900; border-top: 1px solid rgba(0,0,0,0.06);
                 box-shadow: 0 -4px 20px rgba(0,0,0,0.06); padding-bottom: env(safe-area-inset-bottom);
             }
-            .mobile-nav-item {
+            .mobile-nav-btn {
                 display: flex; flex-direction: column; align-items: center; justify-content: center;
-                color: #777; text-decoration: none; font-size: 11px; font-weight: 700; gap: 4px; flex: 1; transition: 0.2s;
+                color: #777; text-decoration: none; font-size: 11px; font-weight: 700; gap: 4px; flex: 1; transition: 0.2s; background: none; border: none; cursor: pointer;
             }
-            .mobile-nav-item i { font-size: 18px; color: #666; transition: 0.2s; }
-            .mobile-nav-item:active { transform: scale(0.92); }
-            .mobile-nav-item:active i { color: var(--basil); }
+            .mobile-nav-btn i { font-size: 18px; color: #666; transition: 0.2s; }
+            .mobile-nav-btn:active { transform: scale(0.92); }
+            .mobile-nav-btn:active i { color: var(--basil); }
             
             /* زر السلة العائم الدائري الفخم بالزاوية */
             .floating-cart-btn {
@@ -321,7 +323,7 @@
 <body>
 
     <header>
-        <div class="header-logo" onclick="window.scrollTo(0,0)">
+        <div class="header-logo" onclick="closeCategoryPage(); window.scrollTo(0,0)">
             <i class="fas fa-leaf logo-icon"></i>
             <div>
                 <div class="logo-text">كشنة</div>
@@ -329,10 +331,10 @@
         </div>
         
         <nav class="header-nav">
-            <a href="#saver-boxes">صناديق التوفير</a>
-            <a href="#vegetables">خضروات مقطعة</a>
-            <a href="#fruits">فواكه مجهزة</a>
-            <a href="#greens">ورقيات طازجة</a>
+            <button class="nav-link-btn" onclick="openCategoryPage('grid-saver-boxes', 'صناديق التوفير')">صناديق التوفير</button>
+            <button class="nav-link-btn" onclick="openCategoryPage('grid-vegetables', 'خضروات مقطعة ومجهزة')">خضروات مقطعة</button>
+            <button class="nav-link-btn" onclick="openCategoryPage('grid-fruits', 'فواكه مقطعة ومجهزة')">فواكه مجهزة</button>
+            <button class="nav-link-btn" onclick="openCategoryPage('grid-greens', 'ورقيات طازجة')">ورقيات طازجة</button>
         </nav>
 
         <div class="header-ctas">
@@ -347,22 +349,22 @@
     </header>
 
     <nav class="mobile-nav-bar">
-        <a href="#saver-boxes" class="mobile-nav-item">
+        <button onclick="openCategoryPage('grid-saver-boxes', 'صناديق التوفير')" class="mobile-nav-btn">
             <i class="fas fa-box-open"></i>
             <span>التوفير</span>
-        </a>
-        <a href="#vegetables" class="mobile-nav-item">
+        </button>
+        <button onclick="openCategoryPage('grid-vegetables', 'خضروات مقطعة ومجهزة')" class="mobile-nav-btn">
             <i class="fas fa-carrot"></i>
             <span>خضروات</span>
-        </a>
-        <a href="#fruits" class="mobile-nav-item">
+        </button>
+        <button onclick="openCategoryPage('grid-fruits', 'فواكه مقطعة ومجهزة')" class="mobile-nav-btn">
             <i class="fas fa-apple-alt"></i>
             <span>فواكه</span>
-        </a>
-        <a href="#greens" class="mobile-nav-item">
+        </button>
+        <button onclick="openCategoryPage('grid-greens', 'ورقيات طازجة')" class="mobile-nav-btn">
             <i class="fas fa-seedling"></i>
             <span>ورقيات</span>
-        </a>
+        </button>
     </nav>
 
     <button class="floating-cart-btn" id="floating-cart" onclick="openCheckoutPage()">
@@ -370,62 +372,78 @@
         <span class="floating-cart-badge" id="floating-cart-count">0</span>
     </button>
 
-    <section class="hero fade-up">
-        <div class="hero-content">
-            <h1 class="hero-title" id="site-hero-title">تجهيز طبختك صار أسهل وأسرع.</h1>
-            <p class="hero-desc" id="site-hero-desc">كل اللي تحتاجه من خضروات، فواكه، وورقيات مقطعة ومغسولة بعناية. نختصر عليك التعب لتوفر وقتك وجهدك.</p>
-            
-            <div class="hero-highlights">
-                <div class="highlight-item"><i class="fas fa-shipping-fast"></i> توصيل سريع</div>
-                <div class="highlight-item"><i class="fas fa-star"></i> أعلى معايير النظافة</div>
-                <div class="highlight-item"><i class="fas fa-apple-alt"></i> منتجات طازجة يومياً</div>
+    <div id="main-storefront-content">
+        <section class="hero fade-up">
+            <div class="hero-content">
+                <h1 class="hero-title" id="site-hero-title">تجهيز طبختك صار أسهل وأسرع.</h1>
+                <p class="hero-desc" id="site-hero-desc">كل اللي تحتاجه من خضروات، فواكه، وورقيات مقطعة ومغسولة بعناية. نختصر عليك التعب لتوفر وقتك وجهدك.</p>
+                
+                <div class="hero-highlights">
+                    <div class="highlight-item"><i class="fas fa-shipping-fast"></i> توصيل سريع</div>
+                    <div class="highlight-item"><i class="fas fa-star"></i> أعلى معايير النظافة</div>
+                    <div class="highlight-item"><i class="fas fa-apple-alt"></i> منتجات طازجة يومياً</div>
+                </div>
+
+                <div class="hero-delivery-banner">
+                    <i class="fas fa-stopwatch"></i>
+                    <span id="site-delivery-text">توصلك لباب بيتك في <strong id="site-delivery-minutes">45 دقيقة!</strong></span>
+                </div>
+
+                <br>
+                <button class="btn btn-orange" onclick="document.getElementById('saver-boxes').scrollIntoView();">تسوق الآن <i class="fas fa-arrow-down"></i></button>
             </div>
-
-            <div class="hero-delivery-banner">
-                <i class="fas fa-stopwatch"></i>
-                <span id="site-delivery-text">توصلك لباب بيتك في <strong id="site-delivery-minutes">45 دقيقة!</strong></span>
+            <div class="hero-image-container">
+                <div class="hero-badge"><i class="fas fa-check-circle"></i> طازج ونظيف يومياً</div>
+                <img src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?q=80&w=800&auto=format&fit=crop" alt="خضار مقطعة" class="hero-img" id="main-hero-img">
             </div>
+        </section>
 
-            <br>
-            <button class="btn btn-orange" onclick="document.getElementById('saver-boxes').scrollIntoView();">تسوق الآن <i class="fas fa-arrow-down"></i></button>
-        </div>
-        <div class="hero-image-container">
-            <div class="hero-badge"><i class="fas fa-check-circle"></i> طازج ونظيف يومياً</div>
-            <img src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?q=80&w=800&auto=format&fit=crop" alt="خضار مقطعة" class="hero-img" id="main-hero-img">
-        </div>
-    </section>
+        <section id="saver-boxes" class="shop-section fade-up">
+            <div class="section-header">
+                <i class="fas fa-box-open"></i>
+                <h2 class="section-title">صناديق التوفير</h2>
+            </div>
+            <div class="products-grid" id="grid-saver-boxes"></div>
+            <div class="view-more-container" id="more-btn-grid-saver-boxes"></div>
+        </section>
 
-    <section id="saver-boxes" class="shop-section fade-up">
-        <div class="section-header">
-            <i class="fas fa-box-open"></i>
-            <h2 class="section-title">صناديق التوفير</h2>
-        </div>
-        <div class="products-grid" id="grid-saver-boxes"></div>
-    </section>
+        <section id="vegetables" class="shop-section fade-up">
+            <div class="section-header">
+                <i class="fas fa-carrot"></i>
+                <h2 class="section-title">خضروات مقطعة ومجهزة</h2>
+            </div>
+            <div class="products-grid" id="grid-vegetables"></div>
+            <div class="view-more-container" id="more-btn-grid-vegetables"></div>
+        </section>
 
-    <section id="vegetables" class="shop-section fade-up">
-        <div class="section-header">
-            <i class="fas fa-carrot"></i>
-            <h2 class="section-title">خضروات مقطعة ومجهزة</h2>
-        </div>
-        <div class="products-grid" id="grid-vegetables"></div>
-    </section>
+        <section id="fruits" class="shop-section fade-up">
+            <div class="section-header">
+                <i class="fas fa-apple-alt" style="color: #e74c3c;"></i>
+                <h2 class="section-title">فواكه مقطعة ومجهزة</h2>
+            </div>
+            <div class="products-grid" id="grid-fruits"></div>
+            <div class="view-more-container" id="more-btn-grid-fruits"></div>
+        </section>
 
-    <section id="fruits" class="shop-section fade-up">
-        <div class="section-header">
-            <i class="fas fa-apple-alt" style="color: #e74c3c;"></i>
-            <h2 class="section-title">فواكه مقطعة ومجهزة</h2>
-        </div>
-        <div class="products-grid" id="grid-fruits"></div>
-    </section>
+        <section id="greens" class="shop-section fade-up">
+            <div class="section-header">
+                <i class="fas fa-seedling"></i>
+                <h2 class="section-title">ورقيات طازجة</h2>
+            </div>
+            <div class="products-grid" id="grid-greens"></div>
+            <div class="view-more-container" id="more-btn-grid-greens"></div>
+        </section>
+    </div>
 
-    <section id="greens" class="shop-section fade-up">
-        <div class="section-header">
-            <i class="fas fa-seedling"></i>
-            <h2 class="section-title">ورقيات طازجة</h2>
+    <div id="category-page" class="checkout-overlay">
+        <div class="checkout-navbar">
+            <h2 id="category-page-title">اسم القسم المختار</h2>
+            <button class="back-to-shop" onclick="closeCategoryPage()"><i class="fas fa-arrow-right"></i> العودة للمتجر الرئيسي</button>
         </div>
-        <div class="products-grid" id="grid-greens"></div>
-    </section>
+        <div class="shop-section" style="border: none;">
+            <div class="products-grid" id="category-page-grid"></div>
+        </div>
+    </div>
 
     <div id="toast-container" class="toast-container"></div>
 
@@ -685,10 +703,10 @@
             <div class="footer-col">
                 <h3>روابط سريعة</h3>
                 <div class="footer-links-list">
-                    <a href="#saver-boxes">صناديق التوفير</a>
-                    <a href="#vegetables">خضروات مقطعة</a>
-                    <a href="#fruits">فواكه مجهزة</a>
-                    <a href="#greens">ورقيات طازجة</a>
+                    <button class="footer-link-btn" onclick="openCategoryPage('grid-saver-boxes', 'صناديق التوفير')">صناديق التوفير</button>
+                    <button class="footer-link-btn" onclick="openCategoryPage('grid-vegetables', 'خضروات مقطعة ومجهزة')">خضروات مقطعة</button>
+                    <button class="footer-link-btn" onclick="openCategoryPage('grid-fruits', 'فواكه مقطعة ومجهزة')">فواكه مجهزة</button>
+                    <button class="footer-link-btn" onclick="openCategoryPage('grid-greens', 'ورقيات طازجة')">ورقيات طازجة</button>
                 </div>
             </div>
 
@@ -988,49 +1006,130 @@
             }
         }
 
-        // --- طباعة وعرض المنتجات للكل فورا (منع الكروت الافتراضية) ---
+        // --- نظام الصفحات والتحكم في عرض الـ 4 منتجات وعرض المزيد ---
         function renderCustomProducts() {
             let savedHeroImg = localStorage.getItem('kashnah_hero_img');
             if(savedHeroImg) { document.getElementById('main-hero-img').src = savedHeroImg; }
 
             const grids = ['grid-saver-boxes', 'grid-vegetables', 'grid-fruits', 'grid-greens'];
-            grids.forEach(g => { document.getElementById(g).innerHTML = ''; });
+            grids.forEach(g => { 
+                document.getElementById(g).innerHTML = ''; 
+                document.getElementById('more-btn-' + g).innerHTML = '';
+            });
 
             let customProducts = JSON.parse(localStorage.getItem('kashnah_products')) || [];
             
+            // تجميع المنتجات حسب تصنيفها
+            let categorized = {
+                'grid-saver-boxes': [],
+                'grid-vegetables': [],
+                'grid-fruits': [],
+                'grid-greens': []
+            };
+
+            // فرز تصاعدي أو تنازلي حسب رغبتك (هنا من الأحدث للأقدم)
             customProducts.forEach(prod => {
-                const grid = document.getElementById(prod.catId);
-                if(grid) {
-                    const card = document.createElement('div');
-                    card.className = 'product-card fade-up show-animate'; 
-                    
-                    let adminBtnsHTML = isAdminLoggedIn 
-                        ? `<div style="display:flex; gap:6px; margin-top:10px;">
-                             <button class="btn btn-white" style="flex:1; color: var(--basil); border-color: var(--basil); font-size: 12px; padding: 6px;" onclick="openEditModal('${prod.id}')"><i class="fas fa-edit"></i></button>
-                             <button class="btn btn-white" style="flex:1; color: #e74c3c; border-color: #e74c3c; font-size: 12px; padding: 6px;" onclick="deleteCustomProduct('${prod.id}')"><i class="fas fa-trash"></i></button>
-                           </div>` 
-                        : '';
-
-                    card.innerHTML = `
-                        <div class="img-wrapper">
-                            <img src="${prod.img}" alt="${prod.name}">
-                        </div>
-                        <h3>${prod.name}</h3>
-                        <p>${prod.desc}</p>
-                        <div class="price">${prod.price} ريال</div>
-                        <button class="btn btn-orange" onclick="addToCart(this, '${prod.name}', ${prod.price}, '${prod.img}')">أضف للسلة <i class="fas fa-cart-plus"></i></button>
-                        ${adminBtnsHTML}
-                    `;
-                    grid.insertBefore(card, grid.firstChild); 
+                if(categorized[prod.catId]) {
+                    categorized[prod.catId].unshift(prod); // وضع الأحدث في البداية
                 }
             });
 
+            // الرسم في الصفحة الرئيسية (بحد أقصى 4 منتجات)
             grids.forEach(g => {
-                const grid = document.getElementById(g);
-                if(grid.innerHTML.trim() === '') {
-                    grid.innerHTML = `<div class="empty-section-msg"><i class="fas fa-box-open" style="font-size: 30px; margin-bottom:10px; color: var(--terracotta);"></i><br>سيتم إضافة المنتجات الطازجة هنا قريباً!</div>`;
+                const gridElement = document.getElementById(g);
+                const productsInCat = categorized[g];
+
+                if(productsInCat.length === 0) {
+                    gridElement.innerHTML = `<div class="empty-section-msg"><i class="fas fa-box-open" style="font-size: 30px; margin-bottom:10px; color: var(--terracotta);"></i><br>سيتم إضافة المنتجات الطازجة هنا قريباً!</div>`;
+                } else {
+                    // عرض أول 4 منتجات فقط في الصفحة الرئيسية
+                    const homeProducts = productsInCat.slice(0, 4);
+                    homeProducts.forEach(prod => {
+                        gridElement.appendChild(createProductCardElement(prod));
+                    });
+
+                    // إذا كان هناك أكثر من 4 منتجات، نقوم بإظهار زر "عرض المزيد"
+                    if(productsInCat.length > 4) {
+                        const moreBtnContainer = document.getElementById('more-btn-' + g);
+                        let catTitle = "";
+                        if(g === 'grid-saver-boxes') catTitle = "صناديق التوفير";
+                        if(g === 'grid-vegetables') catTitle = "خضروات مقطعة ومجهزة";
+                        if(g === 'grid-fruits') catTitle = "فواكه مقطعة ومجهزة";
+                        if(g === 'grid-greens') catTitle = "ورقيات طازجة";
+
+                        moreBtnContainer.innerHTML = `
+                            <button class="btn btn-white" style="border-color: var(--terracotta); color: var(--terracotta); font-weight:800;" onclick="openCategoryPage('${g}', '${catTitle}')">
+                                عرض جميع منتجات ${catTitle} (${productsInCat.length}) <i class="fas fa-plus"></i>
+                            </button>
+                        `;
+                    }
                 }
             });
+
+            // تحديث محتوى صفحة الأقسام المفتوحة حالياً تلقائياً إذا كانت قيد المعاينة
+            if(document.getElementById('category-page').style.display === 'block') {
+                const currentOpenCatId = document.getElementById('category-page').getAttribute('data-current-cat');
+                const currentOpenTitle = document.getElementById('category-page-title').innerText;
+                if(currentOpenCatId) {
+                    openCategoryPage(currentOpenCatId, currentOpenTitle);
+                }
+            }
+        }
+
+        // دالة إنشاء كرت المنتج الموحدة منعاً للتكرار
+        function createProductCardElement(prod) {
+            const card = document.createElement('div');
+            card.className = 'product-card fade-up show-animate'; 
+            
+            let adminBtnsHTML = isAdminLoggedIn 
+                ? `<div style="display:flex; gap:6px; margin-top:10px;">
+                     <button class="btn btn-white" style="flex:1; color: var(--basil); border-color: var(--basil); font-size: 12px; padding: 6px;" onclick="event.stopPropagation(); openEditModal('${prod.id}')"><i class="fas fa-edit"></i></button>
+                     <button class="btn btn-white" style="flex:1; color: #e74c3c; border-color: #e74c3c; font-size: 12px; padding: 6px;" onclick="event.stopPropagation(); deleteCustomProduct('${prod.id}')"><i class="fas fa-trash"></i></button>
+                   </div>` 
+                : '';
+
+            card.innerHTML = `
+                <div class="img-wrapper">
+                    <img src="${prod.img}" alt="${prod.name}">
+                </div>
+                <h3>${prod.name}</h3>
+                <p>${prod.desc}</p>
+                <div class="price">${prod.price} ريال</div>
+                <button class="btn btn-orange" onclick="event.stopPropagation(); addToCart(this, '${prod.name}', ${prod.price}, '${prod.img}')">أضف للسلة <i class="fas fa-cart-plus"></i></button>
+                ${adminBtnsHTML}
+            `;
+            return card;
+        }
+
+        // فتح صفحة القسم الكاملة لعرض كافة المنتجات بلا استثناء
+        function openCategoryPage(catId, title) {
+            const categoryPage = document.getElementById('category-page');
+            const categoryGrid = document.getElementById('category-page-grid');
+            
+            categoryPage.setAttribute('data-current-cat', catId);
+            document.getElementById('category-page-title').innerText = title;
+            categoryGrid.innerHTML = '';
+
+            let customProducts = JSON.parse(localStorage.getItem('kashnah_products')) || [];
+            let productsInCat = customProducts.filter(p => p.catId === catId).reverse(); // قلب المصفوفة لعرض الأحدث أولاً
+
+            if(productsInCat.length === 0) {
+                categoryGrid.innerHTML = `<div class="empty-section-msg">لا توجد منتجات متوفرة في هذا القسم حالياً.</div>`;
+            } else {
+                productsInCat.forEach(prod => {
+                    categoryGrid.appendChild(createProductCardElement(prod));
+                });
+            }
+
+            categoryPage.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCategoryPage() {
+            document.getElementById('category-page').style.display = 'none';
+            document.getElementById('category-page').removeAttribute('data-current-cat');
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
         }
 
         // --- الحذف والتعديل ---
@@ -1163,7 +1262,10 @@
 
         function closeCheckoutPage() {
             document.getElementById('checkout-page').style.display = 'none';
-            document.body.style.overflow = 'auto'; 
+            // إذا كانت صفحة القسم المخصصة مفتوحة، لا ترجع الـ overflow للـ auto
+            if(document.getElementById('category-page').style.display !== 'block') {
+                document.body.style.overflow = 'auto'; 
+            }
         }
 
         function renderCheckoutItems() {
@@ -1204,7 +1306,7 @@
                 btn.innerText = "جاري التقاط الإحداثيات...";
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        mapLink = `https://maps.google.com/?q=${position.coords.latitude},${position.coords.longitude}`;
+                        mapLink = `http://maps.google.com/?q=${position.coords.latitude},${position.coords.longitude}`;
                         btn.innerHTML = "✅ <b>تم التقاط موقعك بنجاح</b>";
                         btn.style.backgroundColor = "rgba(39, 174, 96, 0.1)";
                         btn.style.color = "var(--basil)";
@@ -1323,6 +1425,9 @@ ${telegramProductsSummary}
             document.getElementById('cart-count').innerText = "0"; 
             document.getElementById('floating-cart-count').innerText = "0"; 
             closeCheckoutPage(); 
+            if(document.getElementById('category-page').style.display === 'block') {
+                closeCategoryPage();
+            }
             showSuccessPage(); 
 
             btn.innerHTML = 'تأكيد الطلب وإرساله <i class="fas fa-check-circle"></i>';
@@ -1374,6 +1479,12 @@ ${telegramProductsSummary}
             document.body.style.overflow = 'auto';
             clearInterval(timerInterval); 
         }
+
+        // إعداد المستمعين والتشغيل الأولي عند تحميل الصفحة
+        window.onload = function() {
+            loadSiteSettings();
+            renderCustomProducts();
+        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show-animate'); });
