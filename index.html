@@ -6,7 +6,7 @@
     <title>كشنة | خضار، فواكه، وصناديق توفير</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght=400;500;700;800&display=swap');
 
         :root {
             --terracotta: #D35400; 
@@ -677,7 +677,7 @@
         <div class="footer-container fade-up">
             <div class="footer-col footer-about">
                 <div style="font-size: 32px; font-weight: 800; color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                    شنة <i class="fas fa-leaf" style="color: var(--basil); font-size: 24px;"></i>
+                    كشنة <i class="fas fa-leaf" style="color: var(--basil); font-size: 24px;"></i>
                 </div>
                 <p>نحن الوجهة الأولى لراحتك في المطبخ. نقدم لك خضروات وفواكه وورقيات مقطعة ومغسولة بأعلى معايير الجودة والنظافة، لتستمتع بطبخ أسهل، أسرع، وألذ بدون أي عناء.</p>
             </div>
@@ -988,7 +988,7 @@
             }
         }
 
-        // --- طباعة وعرض المنتجات للكل فورا ---
+        // --- طباعة وعرض المنتجات للكل فورا (منع الكروت الافتراضية) ---
         function renderCustomProducts() {
             let savedHeroImg = localStorage.getItem('kashnah_hero_img');
             if(savedHeroImg) { document.getElementById('main-hero-img').src = savedHeroImg; }
@@ -1107,11 +1107,6 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadSiteSettings();
-            renderCustomProducts();
-        });
-
         // --- نظام الإشعارات وأنيميشن السلة ---
         function showToast(name, img) {
             const container = document.getElementById('toast-container');
@@ -1131,21 +1126,22 @@
         function addToCart(btnElement, name, price, img) {
             cart.push({ id: Date.now(), name, price, img });
             
-            // تحديث شارة السلة العادية وسلة الجوال العائمة في نفس الوقت
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('floating-cart-count').innerText = cart.length;
             
-            // أنيميشن الاهتزاز الفخم لأيقونة الديسكتوب
             const cartIcon = document.querySelector('.cart-icon-btn i');
-            cartIcon.classList.remove('cart-wiggle');
-            void cartIcon.offsetWidth; 
-            cartIcon.classList.add('cart-wiggle');
+            if(cartIcon) {
+                cartIcon.classList.remove('cart-wiggle');
+                void cartIcon.offsetWidth; 
+                cartIcon.classList.add('cart-wiggle');
+            }
 
-            // أنيميشن الاهتزاز الفخم لزر السلة العائمة على الجوال
             const floatingCart = document.getElementById('floating-cart');
-            floatingCart.classList.remove('cart-wiggle-floating');
-            void floatingCart.offsetWidth;
-            floatingCart.classList.add('cart-wiggle-floating');
+            if(floatingCart) {
+                floatingCart.classList.remove('cart-wiggle-floating');
+                void floatingCart.offsetWidth;
+                floatingCart.classList.add('cart-wiggle-floating');
+            }
             
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = '<i class="fas fa-check"></i> في السلة';
@@ -1219,7 +1215,6 @@
             } else { alert("جهازك لا يدعم جلب الإحداثيات."); }
         }
 
-        // --- إتمام وإرسال الطلب وإنشاء الفاتورة وتجهيز الإشعارات التفاعلية عبر تليجرام ---
         function checkoutOrder() {
             let customerPhone = document.getElementById('cust-phone').value.trim();
             const name = document.getElementById('cust-name').value.trim();
@@ -1229,7 +1224,6 @@
 
             if(!name || !customerPhone || !address || !building) { alert("الرجاء استكمال تعبئة جميع بيانات العنوان لتوصيل طلبك بدقة."); return; }
 
-            // تنظيف رقم الهاتف وإعداد الصياغة الدولية
             let cleanPhone = customerPhone.replace(/\s+/g, '');
             if (cleanPhone.startsWith('05')) {
                 cleanPhone = '966' + cleanPhone.substring(1);
@@ -1274,12 +1268,10 @@
             document.getElementById('inv-subtotal').innerText = total + ' ريال';
             document.getElementById('inv-total').innerText = total + ' ريال';
 
-            // تجهيز نص الواتساب الجاهز للمراسلة الفورية مشفر ومناسب للروابط URL
             const whatsappTextTemplate = `مرحباً بك يا غالي.. استلمنا طلبك من متجر كشنة وبدأنا نجهزه لك بكل حب ونظافة 🧺✨\n\nرقم طلبك المرجعي: ${orderNumber}\nمجموع الفاتورة: ${total} ريال\n\nفضلاً لا أمراً أرسل لنا موقعك الجغرافي (لوكيشن الواتساب الحسابي المباشر) لتأكيد التوجيه السريع وسرعة وصول المندوب لباب بيتك 📍🛵`;
             const encodedWhatsappText = encodeURIComponent(whatsappTextTemplate);
             const adminDirectWhatsappActionLink = `https://wa.me/${cleanPhone}?text=${encodedWhatsappText}`;
 
-            // 1. صياغة وإرسال رسالة تليجرام الاحترافية والمنظمة للمدير مع زر الإجراء السريع للواتساب
             const telegramMessage = `
 🛍️ <b>طلب جديد من متجر كشنة</b>
 ──────────────────
@@ -1306,11 +1298,9 @@ ${telegramProductsSummary}
             
             sendTelegramNotification(telegramMessage);
 
-            // 2. صياغة وإرسال رسالة الـ SMS الترحيبية للعميل (إذا تم تفعيلها)
-            const clientMessage = `مرحباً ${name}، تم استلام طلبك بنجاح من متجر كشنة! \nرقم الطلب: ${orderNumber}\nالإجمالي: ${total} ريال. جارٍ التجهيز وسيتواصل معك المندوب قريباً.`;
+            const clientMessage = `مرحباً ${name}، تم استلام طلبك بنجاح من متجر كشنة! \nرقم الطلب: ${orderNumber}\nإجمالي الفاتورة: ${total} ريال. جارٍ تجهيز طلبك الآن وسيتواصل معك المندوب قريباً.`;
             sendSMS(displayPhone, clientMessage);
 
-            // 3. إرسال البيانات الاحتياطية للخلفية عبر البريد الإلكتروني المربوط
             const formData = new FormData();
             formData.append('الاسم الكريم', name);
             formData.append('رقم الجوال', displayPhone);
@@ -1339,7 +1329,6 @@ ${telegramProductsSummary}
             btn.disabled = false;
         }
 
-        // --- صفحة النجاح والعداد التنازلي التفاعلي المربوط ديناميكياً ---
         function showSuccessPage() {
             const successOverlay = document.getElementById('success-page-overlay');
             successOverlay.style.display = 'block';
