@@ -29,7 +29,7 @@
 
         /* --- إعدادات الطباعة الدقيقة ومجربة لمنع الفراغات والصفحات الزائدة --- */
         @media print {
-            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay { 
+            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay, .mobile-nav-bar, .floating-cart-btn { 
                 display: none !important; 
             }
             body, html { 
@@ -65,6 +65,7 @@
 
         @keyframes cartWiggle { 0% { transform: rotate(0deg); } 25% { transform: rotate(-15deg) scale(1.2); } 50% { transform: rotate(15deg) scale(1.2); } 75% { transform: rotate(-15deg) scale(1.2); } 100% { transform: rotate(0deg) scale(1); } }
         .cart-wiggle { animation: cartWiggle 0.5s ease; color: var(--terracotta) !important; }
+        .cart-wiggle-floating { animation: cartWiggle 0.5s ease; background-color: var(--terracotta) !important; }
 
         /* --- Buttons --- */
         .btn {
@@ -101,6 +102,10 @@
         .cart-icon-btn { position: relative; font-size: 24px; color: var(--charcoal); cursor: pointer; background: none; border: none; transition: 0.2s; padding: 5px; }
         .cart-icon-btn:hover { color: var(--terracotta); }
         .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--terracotta); color: white; font-size: 11px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+
+        /* --- العناصر العائمة للجوال فقط (مخفية افتراضياً في الديسكتوب) --- */
+        .mobile-nav-bar { display: none; }
+        .floating-cart-btn { display: none; }
 
         /* --- Hero Section --- */
         .hero { display: flex; align-items: center; padding: 60px 5%; gap: 40px; }
@@ -240,38 +245,76 @@
            📱 شاشات الجوال والأجهزة الذكية المحمولة (Responsive Touch Settings)
            ========================================================================== */
         @media (max-width: 768px) {
-            header { padding: 12px 4%; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
-            .header-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; padding: 8px 0 2px; gap: 20px; scrollbar-width: none; }
-            .header-nav::-webkit-scrollbar { display: none; }
-            .header-nav a { font-size: 15px; }
+            header { padding: 12px 4%; gap: 5px; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+            /* إخفاء القائمة العلوية القديمة تماماً لتوفير مساحة نظيفة مريحة للعين */
+            .header-nav { display: none !important; }
             .logo-text { font-size: 24px; }
 
-            .hero { flex-direction: column-reverse; padding: 30px 4% 50px; gap: 30px; text-align: center; }
-            .hero-img { height: 280px; border-radius: 16px; }
-            .hero-title { font-size: 30px; }
-            .hero-desc { font-size: 16px; }
-            .hero-highlights { justify-content: center; gap: 8px; }
-            .highlight-item { padding: 6px 14px; font-size: 13px; }
-            .hero-delivery-banner { width: 100%; justify-content: center; font-size: 15px; padding: 10px 15px; }
+            /* إخفاء زر السلة العلوي على الجوال لأنه تم استبداله بالسلة العائمة الدائرية الاحترافية */
+            .header-ctas .cart-icon-btn { display: none !important; }
 
-            .shop-section { padding: 40px 4% 40px; }
-            .section-title { font-size: 26px; }
+            /* تفعيل شريط التنقل السفلي الفخم الثابت أسفل الشاشة مثل التطبيقات */
+            .mobile-nav-bar {
+                display: flex; justify-content: space-around; align-items: center;
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 68px;
+                background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(15px);
+                z-index: 1900; border-top: 1px solid rgba(0,0,0,0.06);
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.06); padding-bottom: env(safe-area-inset-bottom);
+            }
+            .mobile-nav-item {
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                color: #777; text-decoration: none; font-size: 11px; font-weight: 700; gap: 4px; flex: 1; transition: 0.2s;
+            }
+            .mobile-nav-item i { font-size: 18px; color: #666; transition: 0.2s; }
+            .mobile-nav-item:active { transform: scale(0.92); }
+            .mobile-nav-item:active i { color: var(--basil); }
+            
+            /* زر السلة العائم الدائري الفخم بالزاوية */
+            .floating-cart-btn {
+                display: flex; position: fixed; bottom: 85px; left: 20px;
+                width: 60px; height: 60px; background-color: var(--basil);
+                border-radius: 50%; justify-content: center; align-items: center;
+                color: white; font-size: 22px; z-index: 1950; border: none;
+                box-shadow: 0 8px 25px rgba(39, 174, 96, 0.35); cursor: pointer;
+                transition: transform 0.2s, background-color 0.3s;
+            }
+            .floating-cart-btn:active { transform: scale(0.9); }
+            .floating-cart-badge {
+                position: absolute; top: -2px; right: -2px; background: var(--terracotta);
+                color: white; font-size: 11px; font-weight: bold; width: 22px; height: 22px;
+                border-radius: 50%; display: flex; justify-content: center; align-items: center;
+                border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+
+            .hero { flex-direction: column-reverse; padding: 25px 4% 40px; gap: 25px; text-align: center; }
+            .hero-img { height: 260px; border-radius: 16px; }
+            .hero-title { font-size: 28px; }
+            .hero-desc { font-size: 15px; }
+            .hero-highlights { justify-content: center; gap: 6px; }
+            .highlight-item { padding: 6px 12px; font-size: 12px; }
+            .hero-delivery-banner { width: 100%; justify-content: center; font-size: 14px; padding: 10px 15px; }
+
+            .shop-section { padding: 35px 4% 35px; }
+            .section-title { font-size: 24px; }
             
             /* عرض منتجين في الصف بشكل مرتب ومتناسق */
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .product-card { padding: 10px; border-radius: 12px; }
-            .product-card img { height: 130px; }
-            .product-card h3 { font-size: 15px; margin-bottom: 4px; }
-            .product-card p { font-size: 12px; min-height: 36px; -webkit-line-clamp: 2; margin-bottom: 10px; }
-            .product-card .price { font-size: 17px; margin-bottom: 10px; }
-            .product-card .btn { padding: 10px; font-size: 14px; border-radius: 10px; width: 100%; }
+            .product-card img { height: 120px; }
+            .product-card h3 { font-size: 14px; margin-bottom: 4px; }
+            .product-card p { font-size: 11px; min-height: 34px; -webkit-line-clamp: 2; margin-bottom: 8px; }
+            .product-card .price { font-size: 16px; margin-bottom: 8px; }
+            .product-card .btn { padding: 10px; font-size: 13px; border-radius: 10px; width: 100%; }
 
-            .checkout-container { grid-template-columns: 1fr; padding: 20px 4%; gap: 20px; }
-            .checkout-review-panel, .checkout-form-panel { padding: 18px; border-radius: 16px; }
-            .checkout-navbar h2 { font-size: 18px; }
+            .checkout-container { grid-template-columns: 1fr; padding: 15px 4%; gap: 15px; }
+            .checkout-review-panel, .checkout-form-panel { padding: 15px; border-radius: 16px; }
+            .checkout-navbar h2 { font-size: 16px; }
             
-            #invoice-print-area { padding: 20px !important; }
-            .toast-container { right: 15px; left: 15px; bottom: 15px; }
+            #invoice-print-area { padding: 15px !important; }
+            .toast-container { right: 15px; left: 15px; bottom: 85px; } /* رفع التوست ليكون فوق شريط الملاحة الجوال */
+            
+            /* إضافة هامش سفلي للفوتر حتى لا يغطيه شريط الملاحة السفلي الثابت */
+            footer { padding-bottom: 100px; }
         }
     </style>
 </head>
@@ -302,6 +345,30 @@
             </button>
         </div>
     </header>
+
+    <nav class="mobile-nav-bar">
+        <a href="#saver-boxes" class="mobile-nav-item">
+            <i class="fas fa-box-open"></i>
+            <span>التوفير</span>
+        </a>
+        <a href="#vegetables" class="mobile-nav-item">
+            <i class="fas fa-carrot"></i>
+            <span>خضروات</span>
+        </a>
+        <a href="#fruits" class="mobile-nav-item">
+            <i class="fas fa-apple-alt"></i>
+            <span>فواكه</span>
+        </a>
+        <a href="#greens" class="mobile-nav-item">
+            <i class="fas fa-seedling"></i>
+            <span>ورقيات</span>
+        </a>
+    </nav>
+
+    <button class="floating-cart-btn" id="floating-cart" onclick="openCheckoutPage()">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="floating-cart-badge" id="floating-cart-count">0</span>
+    </button>
 
     <section class="hero fade-up">
         <div class="hero-content">
@@ -610,7 +677,7 @@
         <div class="footer-container fade-up">
             <div class="footer-col footer-about">
                 <div style="font-size: 32px; font-weight: 800; color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                    كشنة <i class="fas fa-leaf" style="color: var(--basil); font-size: 24px;"></i>
+                    شنة <i class="fas fa-leaf" style="color: var(--basil); font-size: 24px;"></i>
                 </div>
                 <p>نحن الوجهة الأولى لراحتك في المطبخ. نقدم لك خضروات وفواكه وورقيات مقطعة ومغسولة بأعلى معايير الجودة والنظافة، لتستمتع بطبخ أسهل، أسرع، وألذ بدون أي عناء.</p>
             </div>
@@ -1063,13 +1130,22 @@
 
         function addToCart(btnElement, name, price, img) {
             cart.push({ id: Date.now(), name, price, img });
-            const badge = document.getElementById('cart-count');
-            badge.innerText = cart.length;
             
+            // تحديث شارة السلة العادية وسلة الجوال العائمة في نفس الوقت
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('floating-cart-count').innerText = cart.length;
+            
+            // أنيميشن الاهتزاز الفخم لأيقونة الديسكتوب
             const cartIcon = document.querySelector('.cart-icon-btn i');
             cartIcon.classList.remove('cart-wiggle');
             void cartIcon.offsetWidth; 
             cartIcon.classList.add('cart-wiggle');
+
+            // أنيميشن الاهتزاز الفخم لزر السلة العائمة على الجوال
+            const floatingCart = document.getElementById('floating-cart');
+            floatingCart.classList.remove('cart-wiggle-floating');
+            void floatingCart.offsetWidth;
+            floatingCart.classList.add('cart-wiggle-floating');
             
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = '<i class="fas fa-check"></i> في السلة';
@@ -1122,6 +1198,7 @@
         function removeCheckoutItem(id) {
             cart = cart.filter(item => item.id !== id);
             document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('floating-cart-count').innerText = cart.length;
             if(cart.length === 0) { closeCheckoutPage(); } else { renderCheckoutItems(); }
         }
 
@@ -1254,6 +1331,7 @@ ${telegramProductsSummary}
 
             cart = []; 
             document.getElementById('cart-count').innerText = "0"; 
+            document.getElementById('floating-cart-count').innerText = "0"; 
             closeCheckoutPage(); 
             showSuccessPage(); 
 
