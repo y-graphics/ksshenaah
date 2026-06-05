@@ -48,7 +48,7 @@
 
         /* --- Print Setup --- */
         @media print {
-            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay, .mobile-nav-bar, .floating-cart-btn, #category-page, #product-detail-overlay, .floating-track-btn { 
+            header, section, footer, #checkout-page, #admin-panel, .toast-container, .checkout-navbar, .btn, #edit-product-overlay, #admin-login-overlay, .floating-cart-btn, #category-page, #product-detail-overlay, .floating-track-btn, #reviews-section { 
                 display: none !important; 
             }
             body, html { background: white !important; height: auto !important; overflow: visible !important; }
@@ -83,13 +83,8 @@
         }
 
         @keyframes toastSlideInLeft {
-            from { transform: translateX(120%) translateY(0); opacity: 0; }
-            to { transform: translateX(0) translateY(0); opacity: 1; }
-        }
-
-        @keyframes toastSlideInTop {
-            from { transform: translateY(-150%) translateX(0); opacity: 0; }
-            to { transform: translateY(0) translateX(0); opacity: 1; }
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         /* --- Custom Buttons --- */
@@ -145,7 +140,7 @@
         }
         .header-track-btn:hover { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(255, 159, 67, 0.2); }
 
-        .mobile-nav-bar, .floating-cart-btn { display: none; }
+        .floating-cart-btn { display: none; }
 
         /* --- Hero Section --- */
         .hero { display: flex; align-items: center; padding: 60px 8%; gap: 40px; position: relative; overflow: hidden; }
@@ -273,29 +268,35 @@
         .form-row input { flex: 1; }
         .payment-method { display: flex; align-items: center; gap: 10px; background: rgba(39, 174, 96, 0.05); color: var(--primary-hover); padding: 12px; border-radius: var(--border-radius); font-weight: 700; margin-bottom: 20px; font-size: 14px; border: 1px solid rgba(39, 174, 96, 0.1); }
 
-        /* --- Toast Notifications --- */
-        .toast-container { position: fixed; z-index: 99999; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 360px; }
-        
-        @media (min-width: 992px) {
-            .toast-container { bottom: 30px; right: 30px; left: auto; }
-            .toast.show { animation: toastSlideInLeft 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        /* --- Toast Notifications (تحسين للجوال والكمبيوتر) --- */
+        .toast-container { 
+            position: fixed; 
+            z-index: 99999; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            width: 100%; 
+            max-width: 320px; 
+            bottom: 30px; 
+            right: 30px; 
+            left: auto;
         }
         
-        @media (max-width: 991px) {
-            .toast-container { top: 20px; left: 20px; right: 20px; max-width: none; margin: 0 auto; }
-            .toast.show { animation: toastSlideInTop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        }
-
         .toast { 
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-right: 4px solid var(--primary); border-left: none; border-radius: var(--border-radius); padding: 14px 18px; 
-            box-shadow: 0 10px 35px rgba(39, 174, 96, 0.12); display: flex; align-items: center; gap: 14px; opacity: 0; transition: 0.3s ease;
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-right: 4px solid var(--primary); border-left: none; 
+            border-radius: 12px; padding: 10px 14px; 
+            box-shadow: 0 6px 25px rgba(39, 174, 96, 0.1); 
+            display: flex; align-items: center; gap: 12px; 
+            opacity: 0; transition: 0.3s ease;
             border-top: 1px solid rgba(255,255,255,0.6);
         }
-        .toast img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .toast.show { animation: toastSlideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards; }
+        .toast img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
         .toast-info { display: flex; flex-direction: column; flex: 1; text-align: right; }
-        .toast-title { font-weight: 800; color: var(--primary); font-size: 14px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
-        .toast-desc { font-size: 13px; color: var(--text); font-weight: 700; }
+        .toast-title { font-weight: 800; color: var(--primary); font-size: 13px; margin-bottom: 1px; display: flex; align-items: center; gap: 4px; }
+        .toast-desc { font-size: 12px; color: var(--text); font-weight: 600; }
 
         /* --- Modals Framework --- */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44,62,80,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 3500; display: none; justify-content: center; align-items: center; padding: 20px; }
@@ -364,6 +365,19 @@
         .bill-row { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; color: var(--text-muted); font-weight: 600; }
         .bill-row.grand-total { font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 0; border-top: 1px dashed rgba(39,174,96,0.2); padding-top: 12px; }
 
+        /* --- Reviews Section --- */
+        .reviews-section { padding: 60px 8%; max-width: 1400px; margin: 0 auto; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; margin-top: 30px; }
+        .review-card { background: #FFFFFF; border-radius: var(--border-radius); padding: 24px; border: 1px solid rgba(39,174,96,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.01); display: flex; flex-direction: column; gap: 12px; position: relative; transition: 0.3s; }
+        .review-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(39,174,96,0.06); border-color: var(--primary); }
+        .review-header { display: flex; align-items: center; gap: 12px; }
+        .review-avatar { width: 45px; height: 45px; border-radius: 50%; background: rgba(39,174,96,0.1); color: var(--primary); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 16px; border: 1px solid rgba(39,174,96,0.15); }
+        .reviewer-info h4 { font-size: 15px; font-weight: 800; color: var(--text); }
+        .reviewer-info span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .review-stars { color: #FFB81C; font-size: 13px; display: flex; gap: 2px; }
+        .review-text { font-size: 14px; color: var(--text); line-height: 1.6; font-weight: 600; text-align: right; }
+        .review-verified { position: absolute; top: 24px; left: 24px; color: var(--primary); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px; background: rgba(39,174,96,0.06); padding: 4px 10px; border-radius: 30px; }
+
         /* --- Footer --- */
         footer { background: #FFFFFF; color: var(--text); padding: 60px 8% 30px; position: relative; border-top: 1px solid rgba(39, 174, 96, 0.08); }
         .footer-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid var(--bg); }
@@ -382,7 +396,7 @@
         .admin-link { color: var(--text-muted); text-decoration: none; font-size: 20px; transition: 0.3s; display: inline-block; padding: 5px; }
         .admin-link:hover { color: var(--primary); }
 
-        /* --- Mobile Responsive Redesign --- */
+        /* --- Mobile Responsive Redesign (تعديلات وضبط الحجم للجوال فقط) --- */
         @media (max-width: 991px) {
             header { padding: 14px 5%; }
             .header-nav { display: none !important; }
@@ -390,7 +404,7 @@
             .header-track-btn { display: none !important; }
             
             .hero { flex-direction: column-reverse; padding: 25px 5%; gap: 24px; text-align: center; }
-            .hero-title { font-size: 30px; }
+            .hero-title { font-size: 28px; line-height: 1.4; margin-bottom: 12px; }
             .hero-desc { font-size: 14px; margin-bottom: 20px; }
             .hero-img { height: 210px; max-width: 100%; }
             .hero-badge { right: 10px; bottom: 10px; font-size: 11px; padding: 8px 16px; }
@@ -398,6 +412,12 @@
             .hero-highlights { justify-content: center; gap: 6px; margin-bottom: 16px; }
             .highlight-item { font-size: 11px !important; padding: 6px 12px !important; border-radius: 30px; width: auto; justify-content: center; }
             .hero-delivery-banner { width: 100%; justify-content: center; font-size: 13px !important; padding: 10px 16px !important; margin-bottom: 18px; border-radius: 20px; }
+
+            /* تحسين العناوين لمنع تداخل أو كبر حجم النصوص السكاشن */
+            .shop-section { padding: 35px 5% 15px; }
+            .section-header { margin-bottom: 25px; gap: 4px; }
+            .section-header .sub-title { font-size: 11px; padding: 2px 10px; }
+            .section-title { font-size: 20px; font-weight: 800; line-height: 1.4; }
 
             .products-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; padding: 4px 0; }
             .product-card { padding: 12px !important; border-radius: 14px !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important; justify-content: flex-start; gap: 6px; }
@@ -415,36 +435,36 @@
             .admin-sidebar { flex-direction: row; overflow-x: auto; padding: 12px; background: white; }
             .admin-sidebar-btn { white-space: nowrap; padding: 8px 12px; }
 
-            .mobile-nav-bar {
-                display: flex; justify-content: space-around; align-items: center;
-                position: fixed; bottom: 0; left: 0; width: 100%; height: 68px;
-                background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(25px);
-                z-index: 1900; border-top: 1px solid rgba(39,174,96,0.1);
-                padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -5px 25px rgba(0,0,0,0.04);
-            }
-            .mobile-nav-btn {
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-                color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 700; gap: 4px; flex: 1; background: none; border: none; cursor: pointer; height: 100%; transition: 0.2s;
-            }
-            .mobile-nav-btn i { font-size: 18px; }
-            .mobile-nav-btn.active, .mobile-nav-btn:hover { color: var(--primary); }
-            
-            .mobile-track-active { color: var(--accent) !important; font-weight: 800; }
-
+            /* تخصيص السلة العائمة للجوال لتبرز بدلاً من الشريط السفلي المحذوف */
             .floating-cart-btn {
-                display: flex; position: fixed; bottom: 85px; left: 20px;
-                width: 56px; height: 56px; background-color: var(--primary);
+                display: flex; position: fixed; bottom: 25px; left: 20px;
+                width: 60px; height: 60px; background-color: var(--primary);
                 border-radius: 50%; justify-content: center; align-items: center;
-                color: white; font-size: 20px; z-index: 1950; border: none;
-                box-shadow: 0 8px 25px rgba(39,174,96,0.3); cursor: pointer;
+                color: white; font-size: 22px; z-index: 1950; border: none;
+                box-shadow: 0 8px 30px rgba(39,174,96,0.35); cursor: pointer;
             }
             .floating-cart-badge {
                 position: absolute; top: -2px; right: -2px; background: var(--accent);
-                color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px;
+                color: white; font-size: 11px; font-weight: bold; width: 20px; height: 20px;
                 border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid white;
             }
 
-            footer { padding-bottom: 95px; }
+            /* تخصيص التوزيع الفوري لإشعارات الجوال لتظهر أسفل اليمين بشكل صغير جداً */
+            .toast-container {
+                bottom: 100px;
+                right: 15px;
+                left: 15px;
+                max-width: none;
+                width: calc(100% - 30px);
+            }
+            .toast {
+                padding: 8px 12px;
+                border-radius: 10px;
+                gap: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            }
+
+            footer { padding-bottom: 40px; }
             
             .checkout-review-panel, .checkout-form-panel { padding: 20px 15px; border-radius: 14px; }
             .checkout-item-row img { width: 55px; height: 55px; }
@@ -491,21 +511,6 @@
             </button>
         </div>
     </header>
-
-    <nav class="mobile-nav-bar">
-        <button id="mbtn-grid-saver-boxes" onclick="openCategoryPage('grid-saver-boxes', 'صناديق التوفير', this)" class="mobile-nav-btn">
-            <i class="fas fa-box-open"></i><span>التوفير</span>
-        </button>
-        <button id="mbtn-grid-vegetables" onclick="openCategoryPage('grid-vegetables', 'خضروات مقطعة ومجهزة', this)" class="mobile-nav-btn">
-            <i class="fas fa-carrot"></i><span>خضروات</span>
-        </button>
-        <button id="mbtn-grid-fruits" onclick="openCategoryPage('grid-fruits', 'فواكه مقطعة ومجهزة', this)" class="mobile-nav-btn">
-            <i class="fas fa-apple-whole"></i><span>فواكه</span>
-        </button>
-        <button id="mbtn-mobile-track" onclick="openSavedTrackingPage()" class="mobile-nav-btn" style="display: none;">
-            <i class="fas fa-truck-fast" style="color: var(--accent);"></i><span style="color: var(--accent);">تتبع الطلب</span>
-        </button>
-    </nav>
 
     <button class="floating-cart-btn" id="floating-cart" onclick="openCheckoutPage()">
         <i class="fas fa-shopping-basket"></i>
@@ -574,6 +579,89 @@
             </div>
             <div class="products-grid" id="grid-greens"></div>
             <div class="view-more-container" id="more-btn-grid-greens"></div>
+        </section>
+
+        <section id="reviews-section" class="reviews-section fade-up show-animate">
+            <div class="section-header">
+                <span class="sub-title">آراء وتجارب عملائنا</span>
+                <h2 class="section-title">ثقة نعتز بها في كشنة 🌟</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-verified"><i class="fas fa-circle-check"></i> عميل مؤكد</div>
+                    <div class="review-header">
+                        <div class="review-avatar">أم</div>
+                        <div class="reviewer-info">
+                            <h4>أم عبد العزيز - الرياض</h4>
+                            <span>منذ يومين</span>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">بصراحة يفك أزمة كبيرة! الخضار واصلة مغسولة ونظيفة تفتح النفس والتقطيع مرتب وذكي يختصر وقت الطبخ، والتوصيل سريع جداً ما كمل نص ساعة.</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-verified"><i class="fas fa-circle-check"></i> عميل مؤكد</div>
+                    <div class="review-header">
+                        <div class="review-avatar">خ</div>
+                        <div class="reviewer-info">
+                            <h4>خالد الشمري - جدة</h4>
+                            <span>منذ 5 أيام</span>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">صندوق التوفير العائلي بطل واقتصادي والجودة نخب أول، التغليف المبرد يحافظ على نضارة الخضار كأنها مقطوفة الحين. الضمان الذهبي لحاله يعطيك راحة بال.</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-verified"><i class="fas fa-circle-check"></i> عميل مؤكد</div>
+                    <div class="review-header">
+                        <div class="review-avatar">ن</div>
+                        <div class="reviewer-info">
+                            <h4>نورة السبيعي - الدمام</h4>
+                            <span>منذ أسبوع</span>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">الفواكه المجهزة والمنعشة تجنن! أولادي حبوها لأنها مقطعة وجاهزة ومغلفة بشكل معقم. صرت أعتمد كشنة في كل طلبات بيتي الأسبوعية بدون تردد.</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-verified"><i class="fas fa-circle-check"></i> عميل مؤكد</div>
+                    <div class="review-header">
+                        <div class="review-avatar">م</div>
+                        <div class="reviewer-info">
+                            <h4>م. فهد القحطاني - الرياض</h4>
+                            <span>منذ أسبوعين</span>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">الترتيب والاحترافية وسرعة استجابة الدعم الفني وتحديد الموقع الـ GPS ممتاز، الفاتورة تطلع لك واضحة بالتفصيل وخدمة تتبع الطلب دقيقة وممتازة جداً.</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-verified"><i class="fas fa-circle-check"></i> عميل مؤكد</div>
+                    <div class="review-header">
+                        <div class="review-avatar">س</div>
+                        <div class="reviewer-info">
+                            <h4>سارة المطيري - مكة</h4>
+                            <span>منذ شهر</span>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">الورقيات دائماً تظلم في التوصيل لكن مع كشنة واصلة خضراء ونضرة وباردة كأنها مغسولة بالبيت حالاً، جودة فريدة تشكرون عليها وخدمة تبيض الوجه.</p>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1138,7 +1226,7 @@
             document.getElementById('modal-p-name').innerText = prod.name;
             document.getElementById('modal-p-price').innerText = prod.price;
             document.getElementById('modal-p-desc').innerText = prod.desc;
-            document.getElementById('modal-p-benefits').innerText = prod.benefits ? prod.benefits : "هذا الصنف منتقى بعناية فائقة، غني بالفيتامينات الأساسية والمعادن الطبيعية التي تدعم النضارة والصحة اليومية لطبختك وعائلتك.";
+            document.getElementById('modal-p-benefits').innerText = prod.benefits ? prod.benefits : "هذا الصنف منتقى بعناية فائقة، غني بالفيتامينات الأساسية والمعادن الطبيعية التي تدعم النضارة والصحة اليومية لطبختك وعمليتك.";
             document.getElementById('modal-qty-input').value = "1";
 
             const addBtn = document.getElementById('modal-add-to-cart-btn');
@@ -1274,7 +1362,7 @@
             if(cid) updates['settings/telegramConfig/chatId'] = cid;
             if(wa) updates['settings/siteIntegration/whatsappPhone'] = wa;
             if(email) updates['settings/siteIntegration/formEmail'] = email;
-            update(ref(db), updates).then(() => { showAdminToast("تم تحديث نقاط الاتصال سحابياً بنجاح!"); }).catch((err) => { showAdminToast("فشل الحفظ: " + err.message, true); });
+            update(ref(db), updates).then(() => { updates['settings/telegramConfig/botToken'] = token; updates['settings/telegramConfig/chatId'] = cid; updates['settings/siteIntegration/whatsappPhone'] = wa; updates['settings/siteIntegration/formEmail'] = email; showAdminToast("تم تحديث نقاط الاتصال سحابياً بنجاح!"); }).catch((err) => { showAdminToast("فشل الحفظ: " + err.message, true); });
         }
 
         window.toggleStoreStatus = function(isOpen) {
@@ -1569,20 +1657,12 @@
             }
             categoryPage.style.display = 'block';
             document.body.style.overflow = 'hidden';
-            
-            document.querySelectorAll('.mobile-nav-btn').forEach(btn => btn.classList.remove('active'));
-            if(btnElement) { btnElement.classList.add('active'); } 
-            else {
-                const targetMobileBtn = document.getElementById('mbtn-' + catId);
-                if(targetMobileBtn) targetMobileBtn.classList.add('active');
-            }
         }
 
         window.closeCategoryPage = function() {
             document.getElementById('category-page').style.display = 'none';
             document.getElementById('category-page').removeAttribute('data-current-cat');
             document.body.style.overflow = 'auto';
-            document.querySelectorAll('.mobile-nav-btn').forEach(btn => btn.classList.remove('active'));
             checkActiveTrackingButton();
         }
 
@@ -1742,7 +1822,8 @@
             confirmBtn.disabled = true;
 
             const orderId = 'KSH-' + Math.floor(100000 + Math.random() * 900000);
-            const timestamp = Date.now();
+            
+            const timestamp = Date.now(); 
             const orderDate = new Date().toLocaleDateString('ar-SA') + ' - ' + new Date().toLocaleTimeString('ar-SA');
 
             const newOrderRef = push(ref(db, 'orders'));
@@ -1798,14 +1879,11 @@
         function checkActiveTrackingButton() {
             const savedOrderId = localStorage.getItem('last_kashnah_order_id');
             const pcTrackBtn = document.getElementById('header-track-action');
-            const mobileTrackBtn = document.getElementById('mbtn-mobile-track');
             
             if(savedOrderId) {
                 if(pcTrackBtn) pcTrackBtn.style.display = 'inline-flex';
-                if(mobileTrackBtn) mobileTrackBtn.style.display = 'flex';
             } else {
                 if(pcTrackBtn) pcTrackBtn.style.display = 'none';
-                if(mobileTrackBtn) mobileTrackBtn.style.display = 'none';
             }
         }
 
@@ -1859,12 +1937,9 @@
             let initMinutes = targetMinutes ? parseInt(targetMinutes[0]) : 45;
             
             let seconds = initMinutes * 60;
-            
             if(orderObj && orderObj.timestamp) {
                 const elapsedSeconds = Math.floor((Date.now() - orderObj.timestamp) / 1000);
                 seconds = (initMinutes * 60) - elapsedSeconds;
-            } else if(isRecall) {
-                seconds = Math.max(180, seconds - 300);
             }
 
             const display = document.getElementById('countdown-timer');
@@ -1891,8 +1966,13 @@
                     else if(seconds > 0) txt.innerHTML = "📍 دخل المندوب محيط الشارع الخاص بك! يرجى الاستعداد للاستلام...";
                 }
 
-                if(seconds <= 0) { clearInterval(timerInterval); display.innerText = "00:00"; txt.innerHTML = "✅ الطلب والمندوب عند الباب الآن، بالهناء والعافية والصحة عليكم!"; }
-                else seconds--;
+                if(seconds <= 0) { 
+                    clearInterval(timerInterval); 
+                    display.innerText = "00:00"; 
+                    txt.innerHTML = "✅ الطلب والمندوب عند الباب الآن، بالهناء والعافية والصحة عليكم!"; 
+                } else {
+                    seconds--;
+                }
             }, 1000);
         }
 
